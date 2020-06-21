@@ -1,54 +1,57 @@
 import React from 'react';
 import axios from 'axios';
-import { Grid, Button } from '@material-ui/core';
-import { ButtonWrapper, Item } from './style';
+import { Button, CircularProgress } from '@material-ui/core';
+import { ButtonWrapper, LoadingWrapper } from './style';
+import ListDogs from './ListDogs/ListDogs';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      URLs: []
+      URLs: [],
+      loading:false
     }
-    this.handleUrlsClick = this.handleUrlsClick.bind(this)
+    this.handleUrlsClick = this.handleUrlsClick.bind(this);
   } 
-
+  
   handleUrlsClick = async () => {
     try {
       let i = 0;
       let urllist = []
       for(i;i< 8;i++){
         const response = await axios.get(`https://random.dog/woof.json`)
-        const json = await response.data
-        //console.log(json.url)
-        urllist.push(json.url)
+        const urlJson = await response.data
+        urllist.push(urlJson.url)
       }
-      this.setState({ URLs: urllist });
+      this.setState({ 
+        URLs: urllist,
+        loading: true
+      });
       console.log({urllist})
     } catch (error) {
-        console.log(error.response.body);
+        console.log('Error from Random Dogs Patching from the API..');
     }
+
+    setTimeout(() => { 
+      this.setState({loading: false})
+    },2000)
+    
   }
 
   render() {
-    const { URLs, loading } = this.state;
+    const { loading } = this.state;
     return (
-      <>
+      <div className="App">
         <ButtonWrapper>
-          <Button variant="outlined" color="secondary" onClick={this.handleUrlsClick} disabled={loading}>
-            Show Dogs
+          <Button variant="outlined" color="secondary" onClick={this.handleUrlsClick} >
+            Show Eight Dogs
           </Button>
-          <h2>It will take a while....</h2>
+          <h3>Refesh the button, if some pictures are not displayed....</h3>
         </ButtonWrapper>
-        <Grid container>
-          {URLs.map((item, index) => (
-            <Grid item xs={12} md={3} key={index}>
-              <Item>
-                <img className='pic' src={item} alt='' />
-              </Item>
-            </Grid>
-          ))}
-        </Grid>
-      </>
+        
+        {loading ? <LoadingWrapper><CircularProgress /></LoadingWrapper>: <ListDogs URLs={this.state.URLs} />}
+        
+      </div> 
     );
   }
 }
