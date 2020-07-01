@@ -12,4 +12,4 @@ This project is to a Responsive Web Application that fetches 8 Dogs from API:[ht
 ## Demo
 ![Alt text](/RandomDogDemo.gif)
 
-test
+
