@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { Item } from './style';
 
+//ListDogs Component
 const ListDogs = (props) => {
     return (
         <Grid container>

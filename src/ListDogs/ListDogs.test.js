@@ -7,7 +7,7 @@ import { Item } from './style';
 
 configure ({adapter: new Adapter()});
 
-//Unit Test
+//Unit Test for ListDogs
 describe('<ListDogs />', () => {
     it('<ListDogs> can work', () => {
         const wrapper = shallow(<ListDogs URLs={["API1", "API2", "API3", "API4", "API5", "API6", "API7", "API8"]}/>);
