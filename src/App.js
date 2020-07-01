@@ -33,6 +33,7 @@ class App extends React.Component {
         console.log('Error from Random Dogs Patching from the API..');
     }
 
+    //Pinner Loading Timers: 2 seconds
     setTimeout(() => { 
       this.setState({loading: false})
     },2000)
